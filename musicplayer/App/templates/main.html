@@ -1,0 +1,34 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Music Player</title>
+</head>
+<body>
+    <div class="music-player">
+      {% for item in page_obj %}
+        <div class="cover">
+            <img src="{{ item.image.url }}"/>
+        </div>
+        <div class="titre">
+         <h3>
+             {{item.artist}}
+         </h3>
+          <h1>
+              {{item.title}}
+          </h1>
+        </div>
+        <center><a href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% endif %}">
+        <i class="fa fa-step-backward fa-2x"></i></a> &nbsp; &nbsp; &nbsp;
+            <a href="{% if page_obj.has_next %}?page={{ page_obj.next_page_number }}{% endif %}"><i class="fa fa-step-forward fa-2x"></i> </a>
+         </center>
+        <div class="audio">
+            <audio class="fc-media" style="width:100%;" id="fc-media" controls>
+                <source src="{% if item.audio_file %}{{ item.audio_file.url }}{% else %}{{ item.audio_link }}{% endif %}" type="audio/mpeg">
+
+            </audio>
+        </div>
+    </div>
+{% endfor %}
+</body>
+</html>
